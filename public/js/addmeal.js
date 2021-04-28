@@ -13,7 +13,7 @@ async function logMeal(event){
     const fats = mealForm.querySelector("#fats").value;
 
     try {
-        const response = await fetch("https://topperformance.me/calories", {
+        const response = await fetch(`${window.location.origin}/calories`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

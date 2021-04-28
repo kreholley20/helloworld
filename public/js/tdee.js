@@ -8,7 +8,7 @@ async function logTDEE (event) {
     const weight = document.querySelector("#weight").value;
     
     try {
-        const response = await fetch("https://topperformance.me/counter", {
+        const response = await fetch(`${window.location.origin}/counter`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

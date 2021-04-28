@@ -56,7 +56,7 @@ app.use(express.static(path.join(__dirname, "public"),{
 }));
 
 app.get("/", (req, res) =>{
-    res.render("/viewpost");
+    res.redirect("/viewpost");
 });
 
 //create a new account

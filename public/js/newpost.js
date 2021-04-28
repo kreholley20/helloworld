@@ -9,7 +9,7 @@ async function newPost(event){
     const postText = document.querySelector(".postText").value;
 
     try{
-        const response = await fetch("http://localhost:8000/posts/new", {
+        const response = await fetch("https://topperformance.me/posts/new", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

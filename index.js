@@ -56,7 +56,7 @@ app.use(express.static(path.join(__dirname, "public"),{
 }));
 
 app.get("/", (req, res) =>{
-    res.redirect("login");
+    res.render("login");
 });
 
 //create a new account

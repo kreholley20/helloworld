@@ -13,7 +13,7 @@
         <a href="/index">Calorie Counter</a>
         <a href= "/meallog" class="active">Meal Log</a>
         <a href= "/tdee">Calculator</a>
-        <a href="/login.html">Log In</a>
+        <a href="/login">Log In</a>
     </nav>
     <table >
         <% let total_cal = 0.0 
@@ -39,11 +39,22 @@
                         <td><%= meal.carbs %></td>
                         <br>
                         <% total_cal += meal.maincalorie 
-                            total_protein += meal.proteins 
-                            total_carbs += meal.carbs
-                            total_fats += meal.fats %>
-                        
-                    <% } %>
+                            if (typeof meal.proteins === 'number'){
+                                total_protein += meal.proteins 
+                            } 
+                            if (typeof meal.carbs === 'number'){
+                                total_carbs += meal.carbs
+                            }
+                            if (typeof meal.fats === 'number'){
+                                total_fats += meal.fats
+                            } 
+                            else {
+                                total_protein += 0;
+                                total_carbs += 0;
+                                total_fats += 0;
+                            }
+                        %>
+                <% } %>
             <% } %>
             <% if (!meal2.length) { %>
                 <br>
@@ -52,6 +63,7 @@
                         <p>Login <a href="login.html" id="nologin">here</a></p>
                     <% } %>
                     <% if (loggedIn === 1 ) { %>
+                        <br>
                         <p>Start adding to your meal log <a href="index" id="nologin">here</a></p>
                     <% } %>
                 </center>

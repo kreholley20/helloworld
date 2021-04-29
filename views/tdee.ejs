@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="/css/tdee.css">
-    <script src="js/tdee.js" defer></script>
+    <script src="/js/tdee.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TDEE Calculator</title>
@@ -14,7 +14,7 @@
         <a href="/index">Calorie Counter</a>
         <a href= "/meallog">Meal Log</a>
         <a href= "/tdee" class="active">Calculator</a>
-        <a href="/login.html">Log In</a>
+        <a href="/login">Log In</a>
     </nav>
     
     <form id="tdeeForm" action="/counter" method="POST">
@@ -50,7 +50,7 @@
         <label for="lean">Enter Your Body Fat</label>
         <br>
         <div class = "selector" class="hidelean" id="leanselect">
-            <select name = "select" id ="lean" class="male">
+            <select name = "select" id ="lean" class="male" >
                 <option value="" disabled selected>Select Body Fat ( male )</option>
                 <option value="1">7% - 14%</option>
                 <option value=".95">15% - 20%</option>

@@ -20,7 +20,7 @@ h3 {
     font-size: 24px;
 }
 
-button {
+.addmeal {
     background-color: #cf5f5f; 
     border: none;
     color: white;
@@ -29,7 +29,6 @@ button {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    box-shadow:  1px 3px 10px 2px #888888;
   }
 
 #add-meal:hover{
@@ -86,4 +85,32 @@ input {
     border: 1px solid #333;
     /* box-shadow: 1px 3px 5px 3px #999999; */
     height: 30px;
+}
+
+.message {
+    position: absolute;
+    z-index: 9999;
+    width: 50%;
+    padding: .25rem;
+    top: 4rem;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.message>button {
+    position: absolute;
+    top: 3px;
+    right: 0;
+}
+
+.message-error {
+    background-color: #cf5f5f;
+    /* border: 3px solid rgb(173, 89, 89); */
+}
+
+#closeError{
+    border: none;
+    background-color:#cf5f5f; 
 }

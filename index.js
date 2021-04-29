@@ -51,13 +51,13 @@ app.use(session(sessionConfig));
 
 const PORT = process.env.PORT;
 
-app.use(express.static(path.join(__dirname, "public"),{
-    extensions: ['html'],
-}));
-
-app.get("/", (req, res) =>{
-    res.redirect("/viewpost");
+app.get("/login", (req, res) =>{
+    res.render('login');
 });
+
+app.get("/", (req, res) => {
+    res.redirect("/login");
+})
 
 //create a new account
 app.post("/register", async (req, res) =>{
@@ -77,7 +77,7 @@ app.post("/register", async (req, res) =>{
             });
         
             if (userAdded) {
-                return res.redirect('/login.html'); // 200 OK
+                return res.render('login'); // 200 OK
             } else { // something went wrong
                 res.sendStatus(500); // 500 Internal Server Error
             }
@@ -88,6 +88,7 @@ app.post("/register", async (req, res) =>{
     }
 
 });
+
 
 //login into account
 app.post("/login", async (req, res) => {
@@ -149,7 +150,7 @@ app.post("/logout", async (req, res) => {
         }
         //if destoryed
         else {
-            return res.redirect("/login.html");
+            return res.render('login');
         }
 	});
 });
@@ -175,7 +176,7 @@ app.post("/calories", (req, res) => {
             });
 
             if (add === true){
-                res.redirect('meallog');
+                res.redirect('/meallog');
             }
                 
         } catch (err){
@@ -188,7 +189,7 @@ app.post("/calories", (req, res) => {
 
 app.get("/index", (req,res) =>{
     if(req.session.isLoggedIn !==  1){
-        res.redirect('login');
+        return res.render('login');
     } else {
         res.render('index');
     } 
@@ -207,7 +208,7 @@ app.get('/meallog', (req, res) => {
     
     //if user is not logged in, send to the login page
     if (loggedIn !== 1){
-        res.redirect('login.html');
+        return res.render('login');
     } else {
         res.render('meallog', {meal2, loggedIn, tdeeW, todaysdate});
     }
@@ -283,7 +284,7 @@ app.get('/tdee', (req,res) => {
     try{
         //if user is not logged in, send to the login page
         if (req.session.isLoggedIn !== 1){
-            res.redirect('login.html');
+            return res.render('login');
         } else if ( req.session.isLoggedIn === 1 ){
             t = tdeeModel.getTDEE(userid);
             gen = tdeeModel.getGender(userid);
@@ -430,7 +431,7 @@ app.post("/posts/:postid/comments" , (req, res) => {
 app.post("/posts/:postid/delete", (req, res) => {
     const deletepost = postModel.deletePost(req.params.postid);
     if (deletepost){
-        res.redirect('/viewpost');
+        res.redirect('viewpost');
     } else {
         res.sendStatus(400);
     }

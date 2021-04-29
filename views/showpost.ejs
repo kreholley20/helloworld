@@ -14,7 +14,7 @@
         <a href="/index">Calorie Counter</a>
         <a href= "/meallog">Meal Log</a>
         <a href= "/tdee">Calculator</a>
-        <a href="/login.html">Log In</a>
+        <a href="/login">Log In</a>
     </nav>
    
         <div class="postdata">
@@ -34,12 +34,12 @@
             <% let url = "/posts/" + getPost.postid + "/comments"; %>
             <% if (loggedIn === 1){ %>
                 <form id="commentForm" action = <%= url %> method="POST">
-                    <input type="text" name="commentText" id="commentinput" placeholder="Comment Here"> 
+                    <input type="text" name="commentText" id="commentinput" placeholder="Comment Here" >  
                     <button type="submit">Add Comment</button>
                     <div id="errorContainer" class="hidden">
                         <p id="errorMessage">Error</p>
                         <br>
-                        <button id="closeError" onclick="show()">Close</button>
+                        <!-- <button id="closeError" onclick="show()">Close</button> -->
                     </div>
                 </form>
             <% } %>

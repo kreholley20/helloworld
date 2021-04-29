@@ -1,27 +1,31 @@
 "use strict";
 
-const postForm = document.querySelector("#postForm");
+function show() {
+    errorContainer.classList.add("hidden");
+}
+
+const loginForm = document.querySelector("#loginForm");
 const errorContainer = document.querySelector("#errorContainer");
 
-async function newPost(event){
+async function logIn(event){
     event.preventDefault();
-    const title = document.querySelector(".form-title").value;
-    const postText = document.querySelector(".postText").value;
+
+    const email = document.querySelector("#email").value;
+    const password = document.querySelector("#password").value;
 
     try{
-        const response = await fetch(`${window.location.origin}/posts/new`, {
+        const response = await fetch(`${window.location.origin}/login`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({title, postText})
+            body: JSON.stringify({email, password})
         });
 
-        console.log(response + title + postText);
+        console.log(response);
 
-        if (response.status === 200){
-            // postForm.submit();
-            window.location = `${window.location.origin}/viewpost`;
+        if (response.ok){
+            loginForm.submit();
         } else if (response.status === 400){
             try{
                 const errors = await response.json();
@@ -36,31 +40,29 @@ async function newPost(event){
                 errorMessage.textContent = errorString;
             } catch (err) {
                 console.error(err);
+        
                 errorContainer.classList.remove("hidden");
                 const errorMessage = errorContainer.querySelector("#errorMessage");
-                errorMessage.textContent = err;
+                errorMessage.textContent = "account does not exist";
             }
             
-        } else if (response.status === 500) {
+        } else if (reponse.status === 500){
             errorContainer.classList.remove("hidden");
             const errorMessage = errorContainer.querySelector("#errorMessage");
-            errorMessage.textContent = "Could not post";
+            errorMessage.textContent = "Could not login";
         } else {
             errorContainer.classList.remove("hidden");
             const errorMessage = errorContainer.querySelector("#errorMessage");
-            errorMessage.textContent = "Unknown error";
+            errorMessage.textContent = "Could not login";
         }
-    } catch (err){
+    } catch (err) {
         console.error(err);
+        
         errorContainer.classList.remove("hidden");
         const errorMessage = errorContainer.querySelector("#errorMessage");
-        errorMessage.textContent = "Unknown error";
+        errorMessage.textContent = "account does not exist";
     }
     return false;
 }
 
-postForm.addEventListener('submit', newPost);
-
-function show() {
-    errorContainer.classList.add("hidden");
-}
+loginForm.addEventListener('submit', logIn);

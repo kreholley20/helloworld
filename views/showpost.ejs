@@ -35,7 +35,7 @@
             <% if (loggedIn === 1){ %>
                 <form id="commentForm" action = <%= url %> method="POST">
                     <input type="text" name="commentText" id="commentinput" placeholder="Comment Here" >  
-                    <button type="submit">Add Comment</button>
+                    <button id="commentbutton" type="submit">Add Comment</button>
                     <div id="errorContainer" class="hidden">
                         <p id="errorMessage">Error</p>
                         <br>

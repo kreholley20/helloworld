@@ -32,6 +32,7 @@ body{
 .content{
     overflow: auto;
     position: relative;
+    height:100vh;
 }
 
 .content::before{
@@ -93,10 +94,6 @@ h3{
     position: absolute;
     top: 3px;
     right: 0;
-}
-
-.message-error {
-    /* background-color: #cf5f5f; */
 }
 
 #closeError{

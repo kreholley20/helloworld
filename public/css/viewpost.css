@@ -39,11 +39,9 @@ body {
     /* border: 1px solid #111 ;
     border-radius: 2px; */
     height: 100px;
+    line-height: 36px;
 }
 
-#linebreak {
-    background-color: red;
-}
 
 button {
     background-color: #cf5f5f; 
@@ -75,6 +73,11 @@ button {
 #posttitle{
     text-decoration: none;
     color: #cf5f5f;
-    /* background-color: #cf5f5f;
-    height: 20px; */
+    text-align: center;
+}
+
+#titlebreak{
+    display: flex;
+    align-items: center;
+    text-align: center;
 }

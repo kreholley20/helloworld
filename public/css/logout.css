@@ -21,6 +21,7 @@ body{
 .content{
     overflow: auto;
     position: relative;
+    height:100vh;
 }
 
 .content::before{
@@ -63,3 +64,13 @@ p{
     border-bottom: 3px solid #cf5f5f;
 }
 
+.footer{
+    position: fixed;
+    left:0;
+    bottom:0;
+    width: 100%;
+    background-color: #333;
+    color: #f2f2f2;
+    text-align: center;
+    /* height: 50px; */
+}

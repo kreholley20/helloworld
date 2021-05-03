@@ -44,3 +44,18 @@ commentForm.addEventListener('submit', subComment);
 function show() {
     errorContainer.classList.add("hidden");
 }
+
+// deletePost = document.querySelector("#deleteForm");
+// async function deleteP(event){
+//     event.preventDefault();
+//     return false;
+// }
+
+// deletePost.addEventListener('click', deleteP);
+// function disable(){
+//     commentForm.disable = true;
+//     setTimeout(function(){
+//         commentForm.disable = false; 
+//     }, 5000);
+// }
+// commentForm.addEventListener('click', disable);

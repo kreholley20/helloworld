@@ -7,9 +7,8 @@ async function newPost(event){
     event.preventDefault();
     const title = document.querySelector(".form-title").value;
     const postText = document.querySelector(".postText").value;
-
     try{
-        const response = await fetch(`${window.location.origin}/posts/new`, {
+        const response = await fetch(`${window.location.origin}/newpost`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -34,6 +33,7 @@ async function newPost(event){
                     console.log(error);
                 }
                 errorMessage.textContent = errorString;
+                console.log(title + " " + postText + "here");
             } catch (err) {
                 console.error(err);
                 errorContainer.classList.remove("hidden");

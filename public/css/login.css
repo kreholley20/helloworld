@@ -4,7 +4,6 @@ html {
 }
 body{
     margin: 0 auto;
-    /* padding:  0 0px 0px 0px; */
     background-image: url("/background.jpg");
     background-size:cover;
     background-repeat: no-repeat;
@@ -14,12 +13,11 @@ body{
     position: relative;
     height:100vh;
 }
+
 .content::before{
-    content: "";
     position: fixed;
     left: 0;
     right: 0;
-    z-index: -1;
     width: 100%;
     height: 100%;
 }
@@ -48,40 +46,19 @@ input{
 }
 
 button {
-    background-color: #cf5f5f; 
     border: none;
-    color: white;
+    background-color: #cf5f5f; 
+    color: #f0f0f0;
     padding: 15px 32px;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 16px;
 }
-
-.topbar{
-    background-color: #333;
-    overflow: hidden;
-
-}
-
-.topbar a{
-    float: left;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 18px;
-    border-bottom: 2px solid #333;
-}
-
-.topbar a:hover{
-    border-bottom: 3px solid #cf5f5f;
-}  
 
 p{
     font-size:16px;
     text-decoration: none;
 }
+
 p, #description{
     color: white;
     line-height: -5;
@@ -89,10 +66,6 @@ p, #description{
 
 #reg{
     color: white;
-}
-
-.topbar .active{
-    border-bottom: 3px solid #cf5f5f;
 }
 
 .hidden{
@@ -120,21 +93,9 @@ p, #description{
 
 .message-error {
     background-color: #cf5f5f;
-    /* border: 3px solid rgb(173, 89, 89); */
 }
 
 #closeError{
     border: none;
     background-color:#cf5f5f; 
-}
-
-.footer{
-    position: fixed;
-    left:0;
-    bottom:0;
-    width: 100%;
-    background-color: #333;
-    color: #f2f2f2;
-    text-align: center;
-    height: 50px;
 }

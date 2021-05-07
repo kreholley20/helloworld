@@ -2,11 +2,11 @@ html {
     font-family: "Arial", sans-serif;
     font-size: 30px;
 }
+
 body {
     background-color: #f2f2f2;
     margin: 0 auto;
     padding:  0 0px 0px 0px;
-
 }
 
 h3 {
@@ -21,43 +21,25 @@ h3 {
 }
 
 .addmeal {
-    background-color: #cf5f5f; 
     border: none;
-    color: white;
+    background-color: #cf5f5f; 
+    color: #f0f0f0;
     padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 16px;
-  }
+}
+
+.add{
+    text-align: center;
+}
 
 #add-meal:hover{
     background-color: #aa260a;
-
 }
+
 input{
     width: 150px;
     height: 20px;
 }
-
-.topbar{
-    background-color: #333;
-    overflow: hidden;
-}
-
-.topbar a{
-    float: left;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 18px;
-    border-bottom: 2px solid #333;
-}
-
-.topbar a:hover{
-    border-bottom: 3px solid #cf5f5f;
-} 
 
 input {
     width: 150px;
@@ -71,10 +53,6 @@ input {
     max-width: 700px;
 }
 
-.topbar .active{
-    border-bottom: 3px solid #cf5f5f;
-}
-
 .hidden{
     display: none;
     margin: 0 auto;
@@ -83,7 +61,6 @@ input {
 input {
     padding: 8px 8px;
     border: 1px solid #333;
-    /* box-shadow: 1px 3px 5px 3px #999999; */
     height: 30px;
 }
 
@@ -107,7 +84,6 @@ input {
 
 .message-error {
     background-color: #cf5f5f;
-    /* border: 3px solid rgb(173, 89, 89); */
 }
 
 #closeError{

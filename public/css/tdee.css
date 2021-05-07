@@ -10,40 +10,18 @@ body {
     border: 5px black;
 }
 
-.topbar{
-    background-color: #333;
-    overflow: hidden;
-}
-
-.topbar a{
-    float: left;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 18px;
-    border-bottom: 2px solid #333;
-}
-
-.topbar a:hover{
-    border-bottom: 3px solid #cf5f5f;
-} 
-
-#weight{
+#weight, #age{
     padding: 8px 8px;
     border: solid 1px #333;
     /* box-shadow: 1px 3px 5px 3px #999999; */
 }
 button {
-    background-color: #cf5f5f; 
     border: none;
-    color: white;
+    background-color: #cf5f5f; 
+    color: #f0f0f0;
     padding: 15px 32px;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 16px;
-    /* box-shadow:  1px 3px 10px 2px #888888; */
   }
 
   #tdeeForm{
@@ -66,11 +44,8 @@ button {
       font-size: 25px;
       padding: 10px;
       text-align: center;
-  }
 
-.topbar .active{
-    border-bottom: 3px solid #cf5f5f;
-}
+  }
 
 .loginhere{
     color: white;
@@ -80,10 +55,40 @@ button {
     display: none;
 }
 
-.male{
-    display: none;
+#add{
+    text-align: center;
 }
 
-.female{
-    display:block;
+.message {
+    position: absolute;
+    z-index: 9999;
+    width: 50%;
+    padding: .25rem;
+    top: 6rem;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.message>button {
+    position: absolute;
+    top: 3px;
+    right: 0;
+    height: 10px;
+}
+
+.message-error {
+    background-color: #cf5f5f;
+}
+
+#closeError{
+    border: none;
+    background-color:#cf5f5f; 
+}
+
+#description{
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 15px;
 }

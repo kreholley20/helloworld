@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="/css/meallog.css">
+    <link rel="stylesheet" href="/css/navbar.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meal Log</title>
@@ -15,7 +16,8 @@
         <a href= "/tdee">Calculator</a>
         <a href="/login">Log In</a>
     </nav>
-    <table >
+    <h3 class="date">TODAY'S DATE: <%= showDate%></h3>
+    <table>
         <% let total_cal = 0.0 
             let total_protein = 0.0 
             let total_carbs = 0.0

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="/css/viewpost.css">
+    <link rel="stylesheet" href="/css/navbar.css">
     <script src="/js/viewpost.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +31,7 @@
     <% } %>
     <br>
     <div class="titles">   
-        <% for( const post of allPosts){ %>
+        <% for (const post of allPosts) { %>
             <% let route = "posts/" + post.postid; %>
             <div class="post">
                 <hr id="titlebreak">

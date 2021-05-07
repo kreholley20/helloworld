@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="/css/showpost.css">
+    <link rel="stylesheet" href="/css/navbar.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/js/showpost.js" defer></script>
@@ -16,21 +17,17 @@
         <a href= "/tdee">Calculator</a>
         <a href="/login">Log In</a>
     </nav>
-   
         <div class="postdata">
             <div class="heading">
                 <h4> Title: <%= getPost.title %>  
-                <!-- delete this, just for testing purposes. the constraints on the user model wont allow for this -->
-                <% if (typeof username !== 'undefined') { %>
-                    <div id="username"> <%= username.username%> <%=getPost.createdOn%></div>
-                <% } %>
-                <!-- end of delete -->
-                
+                <div id="username"> 
+                    <%= username.username%> <%=getPost.createdOn%>
+                </div>
                 </h4>
             </div>
             <% let deleteurl = "/posts/" + getPost.postid + "/delete"; %>
-            <!-- <div style="display: none;" id="postid"><%= getPost.postid %></div> -->
-            <p id="postText" style="line-height: 40px;"><%= getPost.postText %></p>
+            <div>
+            <p id="postText"><%= getPost.postText %></p>
             <% let url = "/posts/" + getPost.postid + "/comments"; %>
             <% if (loggedIn === 1){ %>
                 <form id="commentForm" action = <%= url %> method="POST">
@@ -39,27 +36,34 @@
                     <div id="errorContainer" class="hidden">
                         <p id="errorMessage">Error</p>
                         <br>
-                        <!-- <button id="closeError" onclick="show()">Close</button> -->
                     </div>
                 </form>
             <% } %>
-            <hr>
-            <% if (typeof username !== 'undefined') { %>
-                <% if (currUsername === username.username){ %>
-                    <form action = <%= deleteurl %> method="POST" id="deleteForm">
-                        <span class="trash">
-                            <input type="image" src="/images/trash.png" id="trashcan">
-                        </span>
-                    </form>
+            </div>
+            <span>
+                <% if (typeof username !== 'undefined') { %>
+                    <% if (currUsername === username.username){ %>
+                        <form action = <%= deleteurl %> method="POST" id="deleteForm">
+                            <span class="trash">
+                                <input type="image" src="/images/trash.png" id="trashcan">
+                            </span>
+                        </form>
+                    <% } %>
                 <% } %>
-            <% } %>
-        </div>
+            </span>
+        <hr>
         <div class="allComments">
             <% for (const comment of getComments) { %>
                 <div class="oneComment">
                     <p>
                         <div id="line1"><%= comment.username %> <span id="date"><%= comment.createdOn %></span></div>
                         <div class="content"><%= comment.commentText %></div>
+                        <% if (comment.username === currUsername){ %>
+                            <% let commentUrl = "/posts/" + comment.commentID + "/deletecomment" %>
+                            <form id="deleteComment" action= <%=commentUrl%> method="POST">
+                                <button id="delComment" onclick="submitDelete();">DELETE</button>
+                            </form>
+                        <% } %>
                     </p>
                 </div>
             <% } %>

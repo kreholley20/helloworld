@@ -53,7 +53,6 @@ const {tdeeModel} = require("./Models/tdeeModel");
 const {userModel} = require("./Models/userModel");
 const {postModel} = require("./Models/postModel");
 const {commentModel} = require("./Models/commentModel");
-// const { response } = require("express");
 
 app.use(express.static(path.join(__dirname, "public"), {
     extensions: ['html'],
@@ -62,14 +61,12 @@ app.use(express.json());
 app.use(express.urlencoded ({extended: true}));
 app.use(session(sessionConfig));
 
-// const PORT = process.env.PORT;
-
 app.get("/login", (req, res) =>{
     res.render('login', {isLogged: req.session.isLoggedIn});
 });
 
 app.get("/", (req, res) => {
-    res.render('login', {isLogged: req.session.isLoggedIn});
+    res.redirect('/login');
 })
 
 //create a new account
@@ -102,10 +99,7 @@ app.post("/register", async (req, res) =>{
 
 });
 
-
-//login into account
 app.post("/login", async (req, res) => {
-	// const { email, password } = req.body;
     const { value, error } = schemas.postLoginSchema.validate(req.body, VALIDATION_OPTIONS);
     if (error){
         const errorMessages = error.details.map( error => error.message );
@@ -154,9 +148,8 @@ app.post("/login", async (req, res) => {
 
 
 app.post("/logout", async (req, res) => {
-    //user not logged in 
     if (req.session.isLoggedIn !== 1){
-        return res.redirect('login');
+        return res.redirect('/login');
     } else {
         req.session.destroy(function(err) {
             //if fails to destory
@@ -165,7 +158,7 @@ app.post("/logout", async (req, res) => {
             } else {
                 //logged out 
                 console.log("logged out successfully");
-                return res.redirect('login');
+                return res.redirect('/login');
             }
         })
     }
@@ -204,19 +197,26 @@ app.post("/calories", (req, res) => {
 });
 
 app.get("/index", (req,res) =>{
-    if(req.session.isLoggedIn !==  1){
-        return res.render('login');
-    } else {
-        res.render('index');
-    } 
+    try{
+        if(req.session.isLoggedIn !==  1){
+            return res.render('login');
+        } else {
+            res.render('index');
+        } 
+    } catch (err) {
+        console.error(err);
+        res.sendStatus(500);
+    }
+    
 });
 
 app.get('/meallog', (req, res) => {
     let todaydate = new Date();
     let month = todaydate.getUTCMonth() + 1;
-    let day = todaydate.getUTCDate();
+    let day = todaydate.getDate();
     let year = todaydate.getUTCFullYear();
     let todaysdate = `${year}/${month}/${day}`;
+    let showDate = `${month}/${day}/${year}`;
 
     const meal2 = mealModel.getTodaysMeals(req.session.userID, todaysdate);
     const tdeeW = tdeeModel.getTDEE(req.session.userID);
@@ -226,7 +226,7 @@ app.get('/meallog', (req, res) => {
     if (loggedIn !== 1){
         res.render('login');
     } else {
-        res.render('meallog', {meal2, loggedIn, tdeeW, todaysdate});
+        res.render('meallog', {meal2, loggedIn, tdeeW, showDate});
     }
 });
 
@@ -237,62 +237,63 @@ app.post("/counter", (req, res) =>{
     if (error){
         const errorMessages = error.details.map( error => error.message );
         return res.status(400).json(errorMessages);
-    }
+        
+    } else {
 
-    let lean = req.body.select;
-    if (typeof lean === "undefined"){
-        // average body fat for both men and women
-        lean = ".95"; 
-    }
+        let height = req.body.height;
+        let goal = req.body.goal;
+        let gender = req.body.gender;
+        let activity = req.body.activity;
+        let weight = value.weight;
+        let age = value.age;
+       
+        height = parseInt(height);
+        weight = parseFloat(value.weight);
+        age = parseInt(value.age);
+        activity = parseFloat(activity);
+        goal = parseInt(goal);
 
-    let gender = req.body.genderselect;
-    let activity = req.body.activityselect;  
-    let goal = req.body.goalselect;
-
-    lean = parseFloat(lean);
-    let weight = parseFloat(value.weight);
-    activity = parseFloat(activity);
-   
-    try {
-        let tdeeW = calTdee.calTdee(weight, gender, lean, activity, goal);
-
-        //if user has account
-        if (req.session.isLoggedIn){
-            const user = req.session.userID;
-            const tdeenow = tdeeModel.getTDEE(user);
-
-            //if user is defaulted, create tdee
-            if (typeof tdeenow === 'undefined'){
-                const cal = tdeeModel.createTDEE({
-                    weight, 
-                    gender, 
-                    lean: lean, 
-                    activity, 
-                    userid: user,
-                    tdee: tdeeW,
-                    goal: goal
-                });
-                if (cal){
-                    res.redirect('tdee');
+        try {
+            let tdeeW = calTdee.calTdee(weight, gender, height, activity, goal, age);
+            //if user has account
+            if (req.session.isLoggedIn){
+                const user = req.session.userID;
+                const tdeenow = tdeeModel.getTDEE(user);
+                
+                //if user is defaulted, create tdee
+                if (typeof tdeenow === 'undefined'){
+                    const cal = tdeeModel.createTDEE({
+                        weight, 
+                        gender, 
+                        height,
+                        activity, 
+                        age,
+                        userid: user,
+                        tdee: tdeeW,
+                        goal: goal
+                    });
+                
+                    if (cal){
+                        res.redirect('tdee');
+                    } else {
+                        res.sendStatus(400);
+                    }
                 } else {
-                    res.sendStatus(400);
-                }
-            } else {
-                const update = tdeeModel.updateTDEE( tdeeW, user );
-                if (update){
-                    res.redirect('tdee');
-
-                } else {
-                    res.sendStatus(400);
+                    const update = tdeeModel.updateTDEE( tdeeW, user );
+                    if (update){
+                        res.redirect('tdee');
+    
+                    } else {
+                        res.sendStatus(400);
+                    }
                 }
             }
+            
+        } catch (err) {
+            console.log(error);
+            res.sendStatus(500);
         }
-        
-    } catch (err) {
-        console.log(error);
-        res.sendStatus(500);
-    }
-    
+    }  
 });
 
 app.get('/tdee', (req,res) => {
@@ -304,9 +305,8 @@ app.get('/tdee', (req,res) => {
             return res.redirect('login');
         } else if ( req.session.isLoggedIn === 1 ){
             t = tdeeModel.getTDEE(userid);
-            gen = tdeeModel.getGender(userid);
 
-            res.render('tdee', {t, loggedIn: req.session.isLoggedIn, gen});
+            res.render('tdee', {t, loggedIn: req.session.isLoggedIn});
         }
     } catch (err) {
         console.error(err);
@@ -345,43 +345,12 @@ app.post('/newpost', (req,res) => {
 
 });
 
-// app.post("/posts/new", (req,res) => {
-//     const {value, error} = schemas.postPostSchema.validate(req.body, VALIDATION_OPTIONS);
-//     if (error){
-//         const errorMessages = error.details.map( error => error.message );
-//         return res.status(400).json(errorMessages);
-//     } else {
-//         try {
-//             // if (req.session.isLoggedIn === 1){
-//                 const newPost = postModel.createPost({
-//                     userid: req.session.userID,
-//                     postText: value.postText,
-//                     title: value.title
-//                 });
-        
-//                 if (newPost === true){
-//                     res.redirect('/viewpost');
-//                 } else {
-//                     return res.sendStatus(400);
-//                 }
-            // } else {
-            //     res.redirect('/login');
-            // }
-            
-//         } catch (err) {
-//             console.error(err);
-//             return res.sendStatus(500);
-//         }
-//     }
-// });
-
 app.get("/newpost", (req, res) => {
     if (req.session.isLoggedIn){
         res.render('newpost');
     } else {
         return res.sendStatus(500);
     }
-    
 });
 
 app.get("/viewpost", (req,res) => {
@@ -413,12 +382,10 @@ app.get("/posts/:postid", (req, res) =>{
         } else {
             return res.sendStatus(500);
         }
-      
     } catch (err) {
         console.error(err);
         return res.sendStatus(500);
-    }
-    
+    } 
 });
 
 app.post("/posts/:postid/comments" , (req, res) => {
@@ -436,7 +403,6 @@ app.post("/posts/:postid/comments" , (req, res) => {
             });
     
             if (newComment){
-                console.log("new comment");
                 res.redirect("/posts/" + req.params.postid);
             } else {
                 return res.sendStatus(400);
@@ -453,6 +419,17 @@ app.post("/posts/:postid/delete", (req, res) => {
     const deletepost = postModel.deletePost(req.params.postid);
     if (deletepost){
         res.redirect('/viewpost');
+    } else if (req.session.isLoggedIn !== 1){
+        res.redirect('/login');
+    } else {
+        res.sendStatus(400);
+    }
+});
+
+app.post("/posts/:commentID/deletecomment", (req, res) => {
+    const deleteComment = commentModel.deleteComment(req.params.commentID);
+    if (deleteComment){
+        res.redirect('back');
     } else if (req.session.isLoggedIn !== 1){
         res.redirect('/login');
     } else {
